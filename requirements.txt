@@ -1,0 +1,11 @@
+fastapi==0.115.11
+requests==2.32.3
+starlette==0.46.0
+moviepy==2.1.2
+mysql-connector-python==9.2.0
+srt==3.5.3
+pydantic==2.10.6
+python-decouple==3.8
+SQLAlchemy==2.0.38
+redis==4.6.0
+rq==1.16.2
