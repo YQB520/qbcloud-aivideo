@@ -1,3 +1,4 @@
+import time
 from src.api import api_video_chunks, api_video_finally
 from src.database import Database
 from src.models.project import DBProject
@@ -13,6 +14,7 @@ def add_task(data: dict):
             api_video_chunks(data)
 
             if i == data["chunks_count"] - 1:
+                time.sleep(2) # 给它点时间缓一缓 ^_^
                 data["file_name"] = api_video_finally(data)
 
         data["status"] = 1

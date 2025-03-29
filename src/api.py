@@ -1,6 +1,6 @@
 import srt
 from decouple import config
-from moviepy import TextClip, ImageClip, CompositeVideoClip, concatenate_videoclips, AudioFileClip, VideoClip
+from moviepy import TextClip, ImageClip, CompositeVideoClip, concatenate_videoclips, AudioFileClip, VideoFileClip
 from sqlalchemy.orm import Session
 from src.models.project import DBProject
 from src.utils import *
@@ -115,7 +115,7 @@ def api_video_finally(data):
     for file_index in range(chunks_count):
         file_path = get_path(f"{video_path}/{file_index}.mp4")
         if is_file_exist(file_path):
-            video_clip = VideoClip(file_path)
+            video_clip = VideoFileClip(file_path)
             video_chunks.append(video_clip)
 
     finally_video = concatenate_videoclips(video_chunks)
@@ -190,10 +190,8 @@ def api_video_chunks(data):
         final_clip = apply_zoom_effect(img_clip, 3, 3, 1.12)
         image_clip.append(final_clip)
 
-    # 拼接图片为视频
     image_video = concatenate_videoclips(image_clip)
 
-    # 加载音频
     audio = AudioFileClip(audio_path)
 
     final_video = CompositeVideoClip([image_video] + caption_clip, size=setting["video_ratio"])

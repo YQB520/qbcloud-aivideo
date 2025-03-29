@@ -32,7 +32,6 @@ def copy_file(source_file, targe_file):
         print("文件复制失败", str(e))
 
 
-# 创建目录
 def add_folder(path):
     if not os.path.exists(path):
         os.makedirs(path)

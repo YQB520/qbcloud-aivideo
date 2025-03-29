@@ -137,17 +137,24 @@ async def video_status(item: VideoStatus):
 
     self_project = db.first(data["project_id"])
 
-    if self_project is None:
-        return {"code": 200, "status": 3, "download_url": ""}
-
     download_url = ""
+
+    take_time = 0
+
+    if self_project is None:
+        return {"code": 200, "status": 3, "download_url": download_url, "time": take_time}
 
     if self_project.file_name:
         asset_url = config('ASSET_URL', cast=str)
-
         download_url = f"{asset_url}/static/{self_project.id}/{self_project.file_name}"
+        time_diff = self_project.updated_at - self_project.created_at
+        total_seconds = int(time_diff.total_seconds())
+        time_hour = total_seconds // 3600
+        time_minutes = (total_seconds % 3600) // 60
+        time_seconds = total_seconds % 60
+        take_time = f"{time_hour:02}:{time_minutes:02}:{time_seconds:02}"
 
-    return {"code": 200, "status": self_project.status, "download_url": download_url}
+    return {"code": 200, "status": self_project.status, "download_url": download_url, "time": take_time}
 
 
 app.include_router(router)

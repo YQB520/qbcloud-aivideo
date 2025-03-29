@@ -46,7 +46,7 @@ class DBProject:
             stmt = (
                 update(Project)
                 .where(Project.id == _id)
-                .values(status=_status, file_name=_file_name)
+                .values(status=_status, file_name=_file_name, updated_at=datetime.now())
             )
             self.session.execute(stmt)
             self.session.commit()
